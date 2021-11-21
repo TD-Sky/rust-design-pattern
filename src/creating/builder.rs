@@ -1,12 +1,13 @@
+#[allow(dead_code)]
 #[derive(Debug)]
-struct User {
+pub struct User {
     id: u32,
     name: String,
     salary: u64,
 }
 
-#[derive(Default)]
-struct UserBuilder {
+#[derive(Debug)]
+pub struct UserBuilder {
     id: u32,
     name: String,
     salary: u64,
@@ -14,7 +15,7 @@ struct UserBuilder {
 
 #[allow(dead_code)]
 impl User {
-    fn builder(id: u32, name: String) -> UserBuilder {
+    pub fn builder(id: u32, name: String) -> UserBuilder {
         UserBuilder::new(id, name)
     }
 }
@@ -28,13 +29,16 @@ impl UserBuilder {
             salary: u64::default(),
         }
     }
+}
 
-    fn salary(mut self, salary: u64) -> Self {
+#[allow(dead_code)]
+impl UserBuilder {
+    pub fn salary(mut self, salary: u64) -> Self {
         self.salary = salary;
         self
     }
 
-    fn build(self) -> User {
+    pub fn build(self) -> User {
         match self {
             Self { id, name, salary } => User { id, name, salary },
         }
@@ -43,11 +47,11 @@ impl UserBuilder {
 
 #[cfg(test)]
 mod tests {
-    use super::UserBuilder;
+    use super::User;
 
     #[test]
     fn main_test() {
-        let user = UserBuilder::new(18, "yorina".to_string())
+        let user = User::builder(18, "yorina".to_string())
             .salary(50000)
             .build();
 
